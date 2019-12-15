@@ -1,0 +1,6 @@
+guacamole_version: 1.0.0
+guacamole_port: 4822
+guacamole_client_username: student
+tigervnc_user_home: /home/student
+tigervnc_user: student
+vnc_resolution: "1600x900"

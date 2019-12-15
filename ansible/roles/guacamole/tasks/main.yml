@@ -1,0 +1,45 @@
+---
+
+- name: Install epel repositry
+  shell: amazon-linux-extras install -y epel
+
+- name: install all require packages for guacamole build
+  yum:
+    name:
+      - gcc
+      - cairo-devel
+      - libjpeg-turbo-devel
+      - libjpeg-devel
+      - libpng-devel
+      - uuid-devel
+      - freerdp-devel
+      - pango-devel
+      - libssh2-devel
+      - libtelnet-devel
+      - libvncserver-devel
+      - pulseaudio-libs-devel
+      - openssl-devel
+      - libvorbis-devel
+      - libwebp-devel
+    state: 'present'
+
+- name: install mate to get desktop UI
+  shell: amazon-linux-extras install -y mate-desktop1.x
+
+- name: Define mate as default desktop for all users
+  shell: echo PREFERRED=/usr/bin/mate-session > /etc/sysconfig/desktop
+
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Create {{ tigervnc_user }} user with root permission
+  user: name={{ tigervnc_user }} groups=wheel append=yes state=present createhome=yes
+
+- include: guacamole-server.yml
+- include: guacamole-client.yml
+- include: vnc-server.yml

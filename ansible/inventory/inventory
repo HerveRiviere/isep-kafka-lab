@@ -1,0 +1,2 @@
+[isep-kafka]
+15.188.144.71  ansible_user=ec2-user

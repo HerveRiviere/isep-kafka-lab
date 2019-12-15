@@ -1,0 +1,46 @@
+- name: Install TigerVNC server.
+  yum:
+    name: tigervnc-server
+    state: present
+
+- name: Ensure TigerVNC unit file is available.
+  template:
+    src: vncserver@.service.j2
+    dest: /etc/systemd/system/vncserver@:1.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart tigervnc
+
+- name: "Create the remote {{ tigervnc_user_home }}/.vnc directory"
+  file:
+    path: "{{ tigervnc_user_home }}/.vnc"
+    owner: "{{ tigervnc_user }}"
+    group: "{{ tigervnc_user }}"
+    mode: 0755
+    state: directory
+  notify:
+    - restart tigervnc
+
+- name: "Set vnc password for user student"
+  shell: |
+    echo {{ tigervnc_vncpass }} | vncpasswd -f > {{ tigervnc_user_home }}/.vnc/passwd
+  args:
+    executable: /bin/bash
+  notify:
+    - restart tigervnc
+
+- name: "Change permissions to 600 for {{ tigervnc_user_home }}/.vnc/passwd"
+  file:
+    path: "{{ tigervnc_user_home }}/.vnc/passwd"
+    owner: "{{ tigervnc_user }}"
+    group: "{{ tigervnc_user }}"
+    mode: 0600
+  notify:
+    - restart tigervnc
+
+- name: Enable TigerVNC server.
+  systemd:
+    name: vncserver@:1.service
+    enabled: yes

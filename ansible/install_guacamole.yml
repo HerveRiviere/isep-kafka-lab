@@ -1,0 +1,17 @@
+---
+- name: install guacamole
+  hosts: isep-kafka
+  become: yes
+  vars_prompt:
+
+    - name: guacamole_client_password
+      prompt: "What is guacamole user password ?"
+      private: yes
+
+    - name: tigervnc_vncpass
+      prompt: "What is the vnc password ?"
+      private: yes
+
+  roles:
+    - common
+    - guacamole

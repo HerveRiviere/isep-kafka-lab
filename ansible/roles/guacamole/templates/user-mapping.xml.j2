@@ -1,0 +1,17 @@
+<user-mapping>
+
+    <!-- Per-user authentication and config information -->
+    <authorize
+            username="{{ guacamole_client_username }}"
+            password="{{ guacamole_client_password }}">
+
+        <connection name="Isep-kafka">
+            <protocol>vnc</protocol>
+            <param name="hostname">localhost</param>
+            <param name="port">5901</param>
+            <param name="username">{{ tigervnc_user }}</param>
+            <param name="password">{{ tigervnc_vncpass }}</param>
+        </connection>
+    </authorize>
+
+</user-mapping>

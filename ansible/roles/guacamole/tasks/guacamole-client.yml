@@ -1,0 +1,44 @@
+- name: Get source of guacamole client
+  unarchive:
+    src: http://mirrors.ircam.fr/pub/apache/guacamole/{{ guacamole_version }}/source/guacamole-client-{{ guacamole_version }}.tar.gz
+    dest: /opt/
+    remote_src: yes
+
+- name: Symbolic link
+  file:
+      src: /opt/guacamole-client-{{ guacamole_version }}
+      dest: /opt/guacamole-client
+      state: link
+
+- name: maven build
+  shell: mvn package -DskipTests
+  args:
+    chdir: /opt/guacamole-client
+
+- name: install tomcat
+  yum:
+    name: tomcat
+    state: present
+
+- name: copy guacamole-client war
+  file:
+      src: /opt/guacamole-client/guacamole/target/guacamole-{{ guacamole_version }}.war
+      dest: /var/lib/tomcat/webapps/guacamole.war
+      state: link
+  notify:
+    - restart tomcat
+
+- name: Generate Tomcat configuration
+  template:
+    src: tomcat.conf.j2
+    dest: /etc/tomcat/tomcat.conf
+    owner: root
+    group: tomcat
+    mode: '0644'
+  notify:
+    - restart tomcat
+- name: restart & enable tomcat
+  systemd:
+    state: started
+    name: tomcat
+    enabled: true

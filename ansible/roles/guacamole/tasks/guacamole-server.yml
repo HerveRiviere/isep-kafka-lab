@@ -1,0 +1,58 @@
+- name: Get source of guacamole
+  unarchive:
+    src: http://apache.mediamirrors.org/guacamole/{{ guacamole_version }}/source/guacamole-server-{{ guacamole_version }}.tar.gz
+    dest: /opt/
+    remote_src: yes
+
+- name: Symbolic link
+  file:
+      src: /opt/guacamole-server-{{ guacamole_version }}
+      dest: /opt/guacamole-server
+      state: link
+
+- name: configure build
+  shell: ./configure --with-init-dir=/etc/init.d
+  args:
+    chdir: /opt/guacamole-server
+
+- name: make
+  shell: make && make install && ldconfig
+  args:
+    chdir: /opt/guacamole-server
+
+
+- name: Creates /etc/guacamole/extensions
+  file:
+    path: /etc/guacamole/extensions
+    state: directory
+
+- name: Creates /etc/guacamole/lib
+  file:
+    path: /etc/guacamole/lib
+    state: directory
+
+- name: Create /etc/guacamole/guacamole.properties
+  template:
+    src: guacamole.properties.j2
+    dest: /etc/guacamole/guacamole.properties
+    owner: root
+    group: wheel
+    mode: '0644'
+  notify:
+    - restart guacd
+
+- name: Create /etc/guacamole/user-mapping.xml
+  template:
+    src: user-mapping.xml.j2
+    dest: /etc/guacamole/user-mapping.xml
+    owner: root
+    group: wheel
+    mode: '0644'
+  notify:
+    - restart guacd
+
+- name: restart & enable guacd
+  systemd:
+    state: started
+    name: guacd
+    enabled: true
