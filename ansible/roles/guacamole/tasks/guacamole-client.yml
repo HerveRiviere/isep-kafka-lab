@@ -1,6 +1,6 @@
 - name: Get source of guacamole client
   unarchive:
-    src: http://mirrors.ircam.fr/pub/apache/guacamole/{{ guacamole_version }}/source/guacamole-client-{{ guacamole_version }}.tar.gz
+    src: http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/{{ guacamole_version }}/source/guacamole-client-{{ guacamole_version }}.tar.gz
     dest: /opt/
     remote_src: yes
 

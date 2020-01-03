@@ -1,0 +1,14 @@
+[Unit]
+Description = Zookeeper server
+After = network.target
+
+[Service]
+Type = simple
+ExecStart = /bin/sh -c '/opt/kafka/bin/zookeeper-server-start.sh /etc/zookeeper/zookeeper.properties 2>&1 >> /var/log/zookeeper/zookeeper.log'
+Restart = always
+RestartSec = 30s
+TimeoutStopSec = 300s
+User = kafka
+
+[Install]
+WantedBy = multi-user.target

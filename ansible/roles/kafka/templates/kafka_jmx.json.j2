@@ -1,0 +1,71 @@
+{
+  "lowercaseOutputName": true,
+  "rules" : [
+    {
+      "pattern": "kafka.cluster<type=Partition, name=UnderReplicated, topic=(.*), partition=(.*)><>Value",
+      "name": "kafka_underReplicatedPartitions",
+      "labels": {
+        "topic": "$1",
+        "partition": "$2",
+        "broker_id": "{{ broker_id }}"
+      },
+      "type": "GAUGE"
+    },
+    {
+      "pattern": "kafka.cluster<type=Partition, name=UnderMinIsr, topic=(.*), partition=(.*)><>Value",
+      "name": "kafka_underMinISRPartitions",
+      "labels": {
+        "topic": "$1",
+        "partition": "$2",
+        "broker_id": "{{ broker_id }}"
+      },
+      "type": "GAUGE"
+    },
+    {
+      "pattern": "kafka.controller<type=KafkaController, name=OfflinePartitionsCount><>Value",
+      "name": "kafka_offline_partition_count",
+      "labels": {
+        "broker_id": "{{ broker_id }}"
+      },
+      "type": "GAUGE"
+    },
+    {
+      "pattern": "kafka.controller<type=ControllerStats, name=UncleanLeaderElectionsPerSec><>Count",
+      "name": "kafka_controller_UncleanLeaderElectionsPerSec_count",
+      "labels": {
+        "broker_id": "{{ broker_id }}"
+       },
+      "type": "GAUGE",
+      "help": "Unclean leader election rate. Should be 0 if everything is OK"
+    },
+
+    {
+      "pattern": "kafka.log<type=Log, name=(LogEndOffset|LogStartOffset|Size), topic=(.+), partition=(.+)><>Value",
+      "name": "kafka_log_$1",
+      "labels":{
+        "topic": "$2",
+        "partition": "$3",
+        "broker_id": "{{ broker_id }}"
+      },
+      "type": "GAUGE"
+    },
+
+    {
+      "pattern":  "kafka.server<type=BrokerTopicMetrics, name=(BytesInPerSec|BytesOutPerSec|MessagesInPerSec|ProduceMessageConversionsPerSec|FetchMessageConversionsPerSec|FailedFetchRequestsPerSec|FailedProduceRequestsPerSec), topic=(.*)><>OneMinuteRate",
+      "name" : "kafka_server_topic_$1",
+      "labels": {
+        "topic": "$2",
+        "broker_id": "{{ broker_id }}"
+      },
+      "type": "GAUGE"
+    },
+    {
+      "pattern": "kafka.server<type=ReplicaManager, name=UnderReplicatedPartitions><>Value",
+      "name": "kafka_underReplicatedPartitionCount",
+      "labels": {
+        "broker_id": "{{ broker_id }}"
+      },
+      "type": "GAUGE"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+- name: Creates /var/kafka-{{ broker_id }}
+  file:
+    path: /var/kafka-{{ broker_id }}/
+    state: directory
+    owner: kafka
+    group: kafka
+
+- name: Creates /etc/kafka
+  file:
+    path: /etc/kafka/
+    state: directory
+    owner: kafka
+    group: kafka
+
+- name: Creates /var/log/kafka-{{ broker_id }}
+  file:
+    path: /var/log/kafka-{{ broker_id }}
+    state: directory
+    owner: kafka
+    group: kafka
+
+
+- name: Create /etc/kafka/kafka-{{ broker_id }}.properties
+  template:
+    src: kafka.properties.j2
+    dest: /etc/kafka/kafka-{{ broker_id }}.properties
+    owner: kafka
+    group: kafka
+    mode: '0644'
+
+- name: Create /etc/kafka/kafka-{{ broker_id }}-jmx-exporter.json
+  template:
+    src: kafka_jmx.json.j2
+    dest: /etc/kafka/kafka-{{ broker_id }}-jmx-exporter.json
+    owner: kafka
+    group: kafka
+    mode: '0644'
+
+- name: Ensure kafka-{{ broker_id }} unit file is available.
+  template:
+    src: kafka.service.j2
+    dest: /etc/systemd/system/kafka-{{ broker_id }}.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart kafka-{{ broker_id }}
+
+- name: restart & enable kafka-{{ broker_id }}
+  systemd:
+    state: started
+    name: kafka-{{ broker_id }}
+    enabled: true

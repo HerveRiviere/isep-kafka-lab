@@ -1,0 +1,14 @@
+[Unit]
+Description = Zookeeper server
+After = network.target
+
+[Service]
+Type = simple
+ExecStart = /bin/sh -c '/opt/prometheus/prometheus --storage.tsdb.path="/var/prometheus" --config.file="/etc/prometheus/prometheus.yml" 2>&1 >> /var/log/prometheus/prometheus.log'
+Restart = always
+RestartSec = 30s
+TimeoutStopSec = 300s
+User = prometheus
+
+[Install]
+WantedBy = multi-user.target

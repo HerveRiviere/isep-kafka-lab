@@ -1,0 +1,15 @@
+[Unit]
+Description = kaf ka server {{ broker_id }}
+After = network.target
+
+[Service]
+Type = simple
+ExecStart = /bin/sh -c '/opt/kafka/bin/kafka-server-start.sh /etc/kafka/kafka-{{ broker_id }}.properties 2>&1 >> /var/log/kafka-{{ broker_id }}/kafka.log'
+Environment = "KAFKA_OPTS=-javaagent:/opt/prometheus-jmx-exporter/jmx_prometheus_javaagent.jar={{ port_metrics }}:/etc/kafka/kafka-{{ broker_id }}-jmx-exporter.json"
+Restart = always
+RestartSec = 30s
+TimeoutStopSec = 300s
+User = kafka
+
+[Install]
+WantedBy = multi-user.target
