@@ -23,7 +23,7 @@
   shell: chown -h kafka:kafka /opt/kafka
 
 - include: prometheus.yml
-# - include: zookeeper.yml
+- include: zookeeper.yml
 - include: kafka.yml
   vars:
     broker_id: 1
