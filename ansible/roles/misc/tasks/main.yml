@@ -14,6 +14,14 @@
     group: student
     mode: '0744'
 
+- name: Creates /home/student/Desktop
+  file:
+    path: /home/student/Desktop
+    state: directory
+    owner: student
+    group: student
+
+
 - name: Create ~/Desktop/README-change_resolution.txt
   template:
     src: README-change_resolution.txt.j2

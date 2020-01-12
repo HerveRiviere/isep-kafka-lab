@@ -1,0 +1,29 @@
+print_help(){
+	echo 'Usage : ./change_vnc_screen_resolution.sh DDDDxDDDD (example ./change_vnc_screen_resolution.sh 1280x768)'
+	echo 'Common screen resolution : '
+	echo "1366x768 (16:9)"
+	echo "1440x900 (16:10)"
+	echo "1280x960 (4:3)"
+	echo ''
+	echo "WARNING : it will close the current session, make sure you saved everything ! "
+}
+if [[ $# -eq 0 ]]; then
+	print_help
+	exit 1
+fi
+
+if [[ $# -gt 1 ]]; then
+	print_help
+	exit 1
+fi
+
+if [[ "$1" =~ ^[0-9]{1,}x[0-9]{1,}$ ]]; then
+	echo "Change resolution to $1"
+	sudo sed -E -i "s/-geometry [0-9]*x[0-9]*/-geometry $1/g" /etc/systemd/system/vncserver@:1.service
+	sudo systemctl daemon-reload
+	sudo systemctl restart vncserver@:1.service
+
+else
+	print_help
+	exit 1
+fi
