@@ -9,7 +9,9 @@
     - name: tigervnc_vncpass
       prompt: "What is the vnc password ?"
       private: yes
-
+  vars:
+    - ec2: false
+    - gcp: true
   roles:
   - common
   - guacamole

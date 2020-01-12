@@ -1,7 +1,15 @@
 ---
 
-- name: Install epel repositry
+- name: Install epel repositry ec2
   shell: amazon-linux-extras install -y epel
+  when: ec2 == true
+
+- name: Install epel repositry gcp
+  yum:
+    name: 'epel-release'
+    state: latest
+  when: gcp == true
+
 
 - name: install all require packages for guacamole build
   yum:
@@ -23,8 +31,13 @@
       - libwebp-devel
     state: 'present'
 
-- name: install mate to get desktop UI
+- name: install mate to get desktop UI ec2
   shell: amazon-linux-extras install -y mate-desktop1.x
+  when: ec2 == true
+
+- name: install mate to get desktop UI gcp
+  shell: yum groupinstall -y "MATE Desktop"
+  when: gcp == true
 
 - name: Define mate as default desktop for all users
   shell: echo PREFERRED=/usr/bin/mate-session > /etc/sysconfig/desktop

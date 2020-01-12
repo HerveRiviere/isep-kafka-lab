@@ -20,5 +20,10 @@
       dest: /opt/apache-maven
       state: link
 
-- name: Update /etc/environment with mvn in PATH & JAVA_HOME
-  shell: echo -e "PATH=/opt/apache-maven/bin:$PATH \nJAVA_HOME={{ java_home }}" > /etc/environment
+- name: Update /etc/environment with mvn in PATH & JAVA_HOME ec2
+  shell: echo -e "PATH=/opt/apache-maven/bin:$PATH \nJAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.222.b10-0.amzn2.0.1.x86_64/" > /etc/environment
+  when: ec2 == true
+
+- name: Update /etc/environment with mvn in PATH & JAVA_HOME gcp
+  shell: echo -e "PATH=/opt/apache-maven/bin:$PATH \nJAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/" > /etc/environment
+  when: gcp == true
