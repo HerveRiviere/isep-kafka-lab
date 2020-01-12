@@ -5,6 +5,20 @@
       - chromium
       - nautilus
       - gedit
+      - git
+      - evince
+
+- name: Clone git repository
+  shell: git clone https://github.com/HerveRiviere/isep-kafka-lab.git
+  args:
+    chdir: /home/student
+
+- name: Change file ownership, group and permissions of the git repo
+  file:
+    path: /home/student/isep-kafka-lab
+    owner: student
+    group: student
+    recurse: true
 
 - name: Create ~/change_vnc_screen_resolution.sh
   template:
@@ -20,6 +34,13 @@
     state: directory
     owner: student
     group: student
+
+- name: Copy pdf instructions to desktop
+  copy:
+    src: /home/student/isep-kafka-lab/instructions.pdf
+    dest: /home/student/Desktop/instruction.pdf
+    remote_src: yes
+    force: yes
 
 
 - name: Create ~/Desktop/README-change_resolution.txt
