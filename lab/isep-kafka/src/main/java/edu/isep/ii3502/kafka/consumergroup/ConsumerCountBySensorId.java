@@ -44,7 +44,8 @@ public class ConsumerCountBySensorId {
 
                 try {
                     JSONObject sensorData = (JSONObject)parse.parse(record.value());
-                    System.out.println(sensorData.get("sensor_id"));
+		    Long sensorId = (Long) sensorData.get("sensor_id");
+                    System.out.println(sensorId);
                     // TODO count number of record by sensor_id
                     
                 } catch (ParseException e) {
