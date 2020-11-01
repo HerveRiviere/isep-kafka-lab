@@ -58,15 +58,15 @@
 \section{Kafka use cases}
 
 \begin{question}
-  Indicate if Apache Kafka can fit \underline{or not} for the following use cases : 
+  Indicate if Apache Kafka can fit \underline{or not} with the following use cases : 
 \begin{enumerate}
 \item Server log aggregation (being able to collect and read log or events from multiple servers and / or applications)
-\item Transfert of files (from couple of kB to GB) between server and / or application 
-\item Event bus allowing distinct applications to share and consume events (example : a web server is producing login events and we want the anti-fraud application and the CRM consuming and reacting to this event) 
+\item Transfert of files (from couple of kB to GB) between servers and / or applications 
+\item Event bus allowing distinct applications to share and consume events (example : a web server is producing login events and we want the anti-fraud application and the CRM can react to this events) 
 \item Event store allowing to store (and if needed, reread in the same order) events produced by an application
-\item Database (like MySQL or postgresSQL)
-\item Messaging system (like Whatsapp or Hangout)
-\item Make data pipeline / streaming ETL (for instance transfert specific records from a database to elastic search and a file in FTP)
+\item Database (like MySQL or PostgresSQL)
+\item Messaging system (like What's app or Hangout)
+\item Make data pipeline / streaming ETL (for instance transfert specific records from a database to Elastic Search and to a file in a FTP)
 \end{enumerate}
  
 \end{question}
@@ -119,7 +119,7 @@ All the java code used in this lab and also all the code (Ansible) to setup the 
 
 \section{Why Zookeeper ?}
 \subsection{Initial checks before starting to play...}
-In a terminal, execute the following command to check all service are well running. Command result should indicate 'running' for each. 
+In a terminal, execute the following command to check all services are well running. Command result should indicate 'running' for each service. 
 
 \begin{code}
     \begin{verbatim}
@@ -152,7 +152,7 @@ Zookeeper is only storing kafka cluster metadata. Kafka data (ie. the events) ar
 
 \subsection{Play with zookeeper-shell}
 
-You can connect and explore to the Zookeeper cluster (here localhost:2181) using the following command in a terminal. You can open a terminal with a shortcut on the Desktop.
+You can connect and explore the Zookeeper cluster (here localhost:2181) using the following command in a terminal. You can open a terminal with a shortcut on the Desktop.
 \begin{code}
     \begin{verbatim}
 /opt/kafka/bin/zookeeper-shell.sh localhost:2181
@@ -198,7 +198,7 @@ sudo systemctl start kafka-1
 \end{code}
 
 \begin{warning}
-Checking manually data inside Zookeeper is here only to explain how kafka servers exchange metadata internally. In a normal use of Kafka you will use command line tool provided by kafka (example kafka-topic.sh) that will abstract the use of Zookeeper.
+Checking manually data inside Zookeeper is here only to explain how kafka servers exchange metadata internally. In a normal usage of Kafka you will use command line tool provided by Kafka (example kafka-topic.sh) that will abstract the usage of Zookeeper.
 \end{warning}
 
 \begin{question}
@@ -237,7 +237,7 @@ By checking prometheus (localhost:9090 in chromium), type in expression field
 kafka_server_topic_messagesinpersec{topic='my-topic-rf1-p1'}
     \end{verbatim}
 
-You should be able to observe the number of message in your topic (you can click on graph to get the metric history) and get the broker_id receiving the load (if needed scroll down the page to see the graph legend)
+You should be able to observe the number of messages in your topic (you can click on graph to get the metric history) and get the broker_id receiving the load (if needed scroll down the page to see the graph legend)
 
 \begin{figure}[H]
 \includegraphics[width=8cm]{prometheus.png}
