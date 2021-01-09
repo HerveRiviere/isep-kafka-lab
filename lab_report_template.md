@@ -45,8 +45,7 @@ Answer...
 ## Question 13 - Bonus : What  happen  if  you  launch  5  instances  of  the  ConsumerWithinAConsumerGroup?   Is  all instances are reciving records ?  Why ?
 
 
-## Question 14 - Bonus : How do you think kafka is storing consumer offset ?  Is the consumer application is at-least-once; at-most-once or exactly once ?  How to 
-have your consumer application exactly-once ?
+## Question 14 - Bonus : How do you think kafka is storing consumer offset ?  Is the consumer application is at-least-once; at-most-once or exactly once ?  How to have your consumer application exactly-once ?
 
 
 ## Question 15 - Bonus : Explain how you can partition data to avoid having data inconsistency when you have multiple instances of your application ?
