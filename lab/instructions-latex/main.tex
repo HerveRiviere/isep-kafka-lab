@@ -52,11 +52,35 @@
 
 \begin{document}
 \title{II 3502 - Lab : Introduction to Apache Kafka}
-\author{Hervé RIVIERE - herve.riviere@isep.fr}
-\date{January 2020}
+\author{Hervé RIVIERE - rivere.herve.isep@gmail.com}
+\date{January 2021}
 \maketitle
-\section{Kafka use cases}
 
+
+\section{Lab report : grade, format and due date}
+
+You need to provide a lab report containing answer of the lab question before \underline{Friday January 15th, 23:59}.
+
+\vspace{5mm}
+This lab report : 
+\begin{enumerate}
+\item Should be uploaded in Moodle / II 3502 course / Kafka lab report box
+\item Should follows the template (md file) \url{https://raw.githubusercontent.com/HerveRiviere/isep-kafka-lab/master/lab_report_template.md}
+\item Will be grade with letter notation : A+ : fully completed with good answers and bonus part / A : Fully completed without the bonus part / B : Partially completed or some incorrect answers / C : not received.
+\item Will provide you \underline{up to 1 point to the final module grade}
+\end{enumerate}
+\vspace{5mm}
+Don't hesitate to reach the teacher for any help or question about this lab. 
+\begin{enumerate}
+    \item by Microsoft Team chat  : during the lab
+    \item by email (rivere.herve.isep@gmail.com) : after the lab
+\end{enumerate}
+
+\vspace{5mm}
+
+Answers of all questions will be posted on Moodle one week after the lab.
+
+\section{Kafka use cases}
 \begin{question}
   Indicate if Apache Kafka can fit \underline{or not} with the following use cases : 
 \begin{enumerate}
@@ -76,7 +100,7 @@ What's a Kafka topic ?
 
 \begin{question}
 True or false ? \\
-A event inside Kafka can be modified ?
+An event inside Kafka can be modified ?
 \end{question}
 
 \section{The lab environement : a fully configured remote desktop}
@@ -232,12 +256,16 @@ Using IntelliJ, open and run the java class edu.isep.ii3502.kafka.BasicProducer
 
 
 
-By checking prometheus (localhost:9090 in chromium), type in expression field
+By checking Prometheus (localhost:9090 in chromium), type in expression field
   \begin{verbatim}
 kafka_server_topic_messagesinpersec{topic='my-topic-rf1-p1'}
     \end{verbatim}
 
-You should be able to observe the number of messages in your topic (you can click on graph to get the metric history) and get the broker_id receiving the load (if needed scroll down the page to see the graph legend)
+You should be able to observe the number of messages in your topic (you can click on graph to get the metric history) and get the broker\_id receiving the load (\underline{if needed scroll down the page to see the graph legend})
+
+\begin{question}
+  Based on Prometheus metric which broker id is receiving the load ? 
+\end{question}
 
 \begin{figure}[H]
 \includegraphics[width=8cm]{prometheus.png}
@@ -249,7 +277,7 @@ You should be able to observe the number of messages in your topic (you can clic
 With the java class edu.isep.ii3502.kafka.BasicProducer still running, run now the class
 
 
-edu.isep.ii3502.kafka.BasicConsumer
+edu.isep.ii3502.kafka.BasicConsumer.
 Follow the instructions in the code to consume from beginning, from tail or from a specific offset.
 
 \begin{question}
@@ -271,7 +299,7 @@ sudo systemctl stop kafka-2 # if broker_id 2 was handling the load \end{verbatim
 Check the messages per second in prometheus and your java application logs.
 
 \begin{question}
- What's happening ? Is your application is fault tolerant ? How to solve the issue ? 
+ What's happening ? Is your application fault tolerant ? How to solve the issue ? 
 \end{question}
 
 
@@ -305,7 +333,7 @@ Modify the java code of the producer and consumer to change the topic name to my
 \\
 
 
-Do the same operation than the previous section and kill again the broker handling the load (change the topic name to my-topic-rf2-p1 in prometheus metric to get the broker id). What is happening, is the application is now fault-tolerant ? 
+Do the same operation than the previous section and kill again the broker handling the load (change the topic name to my-topic-rf2-p1 in prometheus metric to get the broker id). What is happening, is the application now fault-tolerant ? 
 \\
 
 
@@ -321,7 +349,7 @@ What's the leader id now ?
  Is the kafka replication model is a master-follower or a master-master ? 
 \end{question}
 \begin{question}
- Is this configuration is scalable ? Why ? 
+ Is this configuration scalable ? Why ? 
 \end{question}
 Stop all your running java classes.
 
@@ -379,7 +407,7 @@ Is edu.isep.ii3502.kafka.BasicConsumer a scalable and a fault tolerant applicati
 \end{question}
 
 
-\section{Scaling - consumer side}
+\section{Scaling - consumer side (BONUS PART)}
 
 In order of well balance the load between consumer application we will use the consumer group feature of Kafka.
 
@@ -418,11 +446,13 @@ Come back to only one instance of ConsumerWithinAConsumerGroup.  Observe the par
 
 
 \begin{question}
+(BONUS) 
 Explain why edu.isep.ii3502.kafka.consumergroup.ConsumerWithinAConsumerGroup is a scalable and fault tolerant application.
 \end{question}
 
 \begin{question}
-What's happen if you launch 5 instances of the ConsumerWithinAConsumerGroup? Is all instances are reciving records ? Why ?
+(BONUS) 
+What happen if you launch 5 instances of the ConsumerWithinAConsumerGroup? Is all instances are receiving records ? Why ?
 \end{question}
 
 
@@ -437,9 +467,10 @@ Keep one producer application and wait a little bit (30 seconds). Take note of t
 Start one consumer application. Take note of the first (offset, partition) read by this consumer. Assert there is no message lost in your consuming application.
 
 \begin{question}
-How do you think kafka is storing consumer offset ? 
-Is the consumer application is at-least-once; at-most-once or exactly once ? 
-How to have your consumer application exactly-once ? 
+(BONUS) 
+How do you think Kafka is storing consumer offset ? 
+Is the consumer application at-least-once; at-most-once or exactly once ? 
+How can you have your consumer application exactly-once ? 
 \end{question}
 
 
@@ -463,6 +494,7 @@ sensor_id : 25   record_count : 26
 Run now multiple instances of your application, what's the issue ? 
 
 \begin{question}
+(BONUS) 
 Explain how you can partition data to avoid having data inconsistency when you have multiple instances of your application ?
 \end{question}
 
@@ -478,20 +510,25 @@ Modify edu.isep.ii3502.kafka.BasicProducer to use sensor id as Kafka record key.
 Restart the producer and rerun multiple instances of ConsumerCountBySensorId, do you still have data inconsistency ?
 
 \begin{question}
+(BONUS) 
 Explain the relationship between kafka record key and kafka partition
 \end{question}
 
 \begin{question}
+(BONUS) 
 Is your application with my-topic-rf2-p4 topic, consumer group and key partitionning is scalable and fault tolerant ? Why ? 
 \end{question}
 
 \section{Data consistency inside Kafka}
 \begin{question}
+(BONUS) 
 For a topic with mulitple partitions, and a consumer reading all partitions. Do you have a global order of records (all records are read in the same order than they was sent) ? Why ? Which order guarantee do you have ? 
 \end{question}
 
 
-Kafka producers allows to have different mode of acknowledgement (ack setting). Open edu.isep.ii3502.kafka.ack.ProducerWithAck java class. 
+Kafka producers allows to have different mode of acknowledgement (ack setting). 
+
+Open edu.isep.ii3502.kafka.ack.ProducerWithAck java class. 
 
 
 
@@ -503,12 +540,8 @@ Kafka producer have the three following ack mode :
 \end{itemize}
 
 \begin{question}
-For all ack settings (0, 1, all) indicate if it's al-least-once (so generate duplicate); at-most-once (so can generate message lost) or exactly-once ? Why ? 
-\end{question}
-
-
-\begin{question}
-What are the pros and cons of each acks setting ?
+(BONUS) 
+For all ack settings (0, 1, all) indicate if it's al-least-once (so can generate duplicates); at-most-once (so can generate message lost) or exactly-once ?
 \end{question}
 
 
