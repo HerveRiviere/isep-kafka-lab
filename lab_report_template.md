@@ -1,5 +1,5 @@
 # II 3502 - Introduction to Apache Kafka - Lab report
-## <student name>
+## Student name
 
 
 ## Question 0 : Kafka use cases
