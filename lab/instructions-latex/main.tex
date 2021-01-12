@@ -236,7 +236,7 @@ The first step is to create a topic we can after use in our Kafka producer (exac
 
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf1-p1 \
+/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf1-p1 
 --replication-factor 1 --partitions 1 --zookeeper localhost:2181
 
 # Note we are giving zookeeper server ip
@@ -313,7 +313,7 @@ Execute the following command to create a topic with a replicated factor of two
 
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf2-p1 \
+/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf2-p1 
 --replication-factor 2 --partitions 1 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -321,7 +321,7 @@ Execute the following command to create a topic with a replicated factor of two
 Check the status of your new topic with the following command
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p1 \
+/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p1 
 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -340,7 +340,7 @@ Do the same operation than the previous section and kill again the broker handli
 Recheck the status of your topic with the same command than before 
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p1 \
+/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p1 
 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -360,7 +360,7 @@ As you saw using prometheus, in our current configuration, one kafka broker is t
 
 \begin{code}
 \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf2-p4 \
+/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf2-p4 
 --replication-factor 2 --partitions 4 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -368,7 +368,7 @@ You can describe the topic
 
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p4 \
+/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p4 
 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -420,7 +420,7 @@ Open edu.isep.ii3502.kafka.consumergroup.ConsumerWithinAConsumerGroup.
 \\
 
 
-Check ConsumerConfig.GROUP\textunderscore IDP\textunderscore CONFIG, compare it value with the value that was set 
+Check ConsumerConfig.GROUP\textunderscore ID\textunderscore CONFIG, compare it value with the value that was set 
 
 in edu.isep.ii3502.kafka.BasicConsumer.
 \\
