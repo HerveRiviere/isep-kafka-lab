@@ -118,9 +118,9 @@ Be careful with keyboard shortcuts and copy and paste commands : copy and paste 
 For copy-past inside the remote desktop, best is to open this PDF in Chromium inside the remote desktop (file on the desktop)
 \end{warning}
 
-\subsection{Adapt screen resolution}
-If needed you can change the screen resolution of the session by following instructions of the README file located on the desktop. \\
-For a better usuability you can also switch your web browser to a full-screen mode and open these instructions on the remote session (file is located on the desktop)
+\begin{warning}
+For pasting shell command inside a terminal you can use the following shortcut CTRL + SHIFT + V.
+\end{warning}
 
 \subsection{The lab environment}
 
@@ -145,9 +145,18 @@ All the java code used in this lab and also all the code (Ansible) to setup the 
 \subsection{Initial checks before starting to play...}
 In a terminal, execute the following command to check all services are well running. Command result should indicate 'running' for each service. 
 
+\begin{warning}
+For copy-past inside the remote desktop, best is to open this PDF in Chromium inside the remote desktop (file on the desktop)
+\end{warning}
+
+\begin{warning}
+For pasting shell command inside a terminal you can use the following shortcut CTRL + SHIFT + V.
+\end{warning}
+
+
 \begin{code}
     \begin{verbatim}
-sudo systemctl status zookeeper
+sudo systemctl status zookeeper # CTRL + SHIFT + V to paste in terminal
 sudo systemctl status kafka-1
 sudo systemctl status kafka-2
 sudo systemctl status kafka-3\end{verbatim}
@@ -177,6 +186,9 @@ Zookeeper is only storing kafka cluster metadata. Kafka data (ie. the events) ar
 \subsection{Play with zookeeper-shell}
 
 You can connect and explore the Zookeeper cluster (here localhost:2181) using the following command in a terminal. You can open a terminal with a shortcut on the Desktop.
+\begin{warning}
+Zookeeper-shell is basic, there is no prompt or you cannot use arrows keys to change cursor positions or go back to previous command !
+\end{warning}
 \begin{code}
     \begin{verbatim}
 /opt/kafka/bin/zookeeper-shell.sh localhost:2181
@@ -184,7 +196,7 @@ You can connect and explore the Zookeeper cluster (here localhost:2181) using th
 # where each node (called a znode) can contains data and / or have children
 # 
 # Display children of /
-ls /
+ls / 
 
 # Get data contained in /controller znode
 get /controller
@@ -236,10 +248,14 @@ The first step is to create a topic we can after use in our Kafka producer (exac
 
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf1-p1 
+/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf1-p1 \
 --replication-factor 1 --partitions 1 --zookeeper localhost:2181
 
-# Note we are giving zookeeper server ip
+# The "\" character is to prevent command execution in case of new line. 
+# You don't need to add it if you are typing the command by yourself 
+# (and not copy pasting it)
+#
+# Take care we are giving zookeeper server ip
 # to the command line as topic name are stored in Zookeeper
     \end{verbatim}
 \end{code}
@@ -313,7 +329,7 @@ Execute the following command to create a topic with a replicated factor of two
 
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf2-p1 
+/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf2-p1 \
 --replication-factor 2 --partitions 1 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -321,7 +337,7 @@ Execute the following command to create a topic with a replicated factor of two
 Check the status of your new topic with the following command
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p1 
+/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p1 \
 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -340,7 +356,7 @@ Do the same operation than the previous section and kill again the broker handli
 Recheck the status of your topic with the same command than before 
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p1 
+/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p1 \
 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -360,7 +376,7 @@ As you saw using prometheus, in our current configuration, one kafka broker is t
 
 \begin{code}
 \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf2-p4 
+/opt/kafka/bin/kafka-topics.sh --create --topic my-topic-rf2-p4 \
 --replication-factor 2 --partitions 4 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
@@ -368,7 +384,7 @@ You can describe the topic
 
 \begin{code}
     \begin{verbatim}
-/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p4 
+/opt/kafka/bin/kafka-topics.sh --describe --topic my-topic-rf2-p4 \
 --zookeeper localhost:2181 \end{verbatim}
 \end{code}
 
