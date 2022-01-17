@@ -30,4 +30,4 @@ def generateListingGDoc() :
 		for instance in reservation['Instances'] :
 			ip_adress = instance['PublicIpAddress']
 			if(ip_adress!=None):
-				print (ip_adress+"/8080/guacamole")
+				print (ip_adress+":8080/guacamole")
