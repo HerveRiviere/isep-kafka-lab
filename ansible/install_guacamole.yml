@@ -10,8 +10,8 @@
       prompt: "What is the vnc password ?"
       private: yes
   vars:
-    - ec2: true
-    - gcp: false
+    ec2: true
+    gcp: false
   roles:
   - common
   - guacamole

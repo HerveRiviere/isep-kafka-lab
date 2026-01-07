@@ -53,6 +53,6 @@
 - name: Create {{ tigervnc_user }} user with root permission
   user: name={{ tigervnc_user }} groups=wheel append=yes state=present createhome=yes
 
-- include: guacamole-server.yml
-- include: guacamole-client.yml
-- include: vnc-server.yml
+- import_tasks: guacamole-server.yml
+- import_tasks: guacamole-client.yml
+- import_tasks: vnc-server.yml

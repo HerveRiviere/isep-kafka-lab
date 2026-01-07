@@ -22,20 +22,20 @@
 - name: apply permission due to https://github.com/ansible/ansible/issues/21537 bug
   shell: chown -h kafka:kafka /opt/kafka
 
-- include: prometheus.yml
-- include: zookeeper.yml
-- include: kafka.yml
+- import_tasks: prometheus.yml
+- import_tasks: zookeeper.yml
+- include_tasks: kafka.yml
   vars:
     broker_id: 1
     port: 9092
     port_metrics: 9192
-- include: kafka.yml
+- include_tasks: kafka.yml
   vars:
     broker_id: 2
     port: 9093
     port_metrics: 9193
 
-- include: kafka.yml
+- include_tasks: kafka.yml
   vars:
     broker_id: 3
     port: 9094
